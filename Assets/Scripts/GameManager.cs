@@ -87,6 +87,11 @@ public class GameManager : MonoBehaviour
         // Cutscene oynat�l�r (kontroller devre d���, UI kapal� olabilir)
         // �ste�e ba�l� olarak oyuncu giri�i engellenebilir
     }
+    public void StartGame()
+    {
+        AudioManager.Instance.PlaySFX(1);
+        SceneLoader.Instance.LoadScene("Level1", GameState.Playing);
+    }
     private void HandleMainMenu()
     {
         Time.timeScale = 1f;
