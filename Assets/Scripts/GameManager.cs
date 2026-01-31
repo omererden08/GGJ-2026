@@ -8,7 +8,8 @@ public enum GameState
     CutScene,
     Playing,
     Paused,
-    GameOver
+    GameOver,
+    MainMenu
 }
 
 public class GameManager : MonoBehaviour
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        ChangeState(GameState.Playing);
+        ChangeState(GameState.MainMenu);
     }
 
     private void OnEnable()
@@ -73,6 +74,9 @@ public class GameManager : MonoBehaviour
             case GameState.GameOver:
                 HandleGameOver();
                 break;
+            case GameState.MainMenu:
+                HandleMainMenu();
+                break;
         }
     }
 
@@ -80,22 +84,30 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         Debug.Log("Game State: CutScene");
-        // Cutscene oynatýlýr (kontroller devre dýþý, UI kapalý olabilir)
-        // Ýsteðe baðlý olarak oyuncu giriþi engellenebilir
+        // Cutscene oynatï¿½lï¿½r (kontroller devre dï¿½ï¿½ï¿½, UI kapalï¿½ olabilir)
+        // ï¿½steï¿½e baï¿½lï¿½ olarak oyuncu giriï¿½i engellenebilir
+    }
+    private void HandleMainMenu()
+    {
+        Time.timeScale = 1f;
+        Debug.Log("Game State: MainMenu");
+        AudioManager.Instance.PlayMusic(0);
+        AudioManager.Instance.SetMusicVolume(1f);
+        AudioManager.Instance.SetSFXVolume(0.5f);
     }
 
     private void HandlePlaying()
     {
         Time.timeScale = 1f;
         Debug.Log("Game State: Playing");
-        // Gameplay baþlar
+        // Gameplay baï¿½lar
     }
 
     private void HandlePaused()
     {
         Time.timeScale = 0f;
         Debug.Log("Game State: Paused");
-        // Pause menüsü gösterilir
+        // Pause menï¿½sï¿½ gï¿½sterilir
     }
 
     private void HandleGameOver()
@@ -105,15 +117,15 @@ public class GameManager : MonoBehaviour
         
         StartCoroutine(RestartLevelDelayed());
 
-        // UI açýlabilir
+        // UI aï¿½ï¿½labilir
         // Fade, ses, animasyon tetiklenebilir
-        // Restart veya Menü tuþu aktif edilebilir
+        // Restart veya Menï¿½ tuï¿½u aktif edilebilir
     }
 
 
     private void Update()
     {
-        // Escape ile pause sadece Playing veya Paused durumundayken geçerli
+        // Escape ile pause sadece Playing veya Paused durumundayken geï¿½erli
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (CurrentState == GameState.Playing)
@@ -140,7 +152,7 @@ public class GameManager : MonoBehaviour
     {
         if (CurrentState == GameState.GameOver)
         {
-            // Sahne yeniden yüklendiðinde otomatik Playing'e geç
+            // Sahne yeniden yï¿½klendiï¿½inde otomatik Playing'e geï¿½
             ChangeState(GameState.Playing);
         }
     }
