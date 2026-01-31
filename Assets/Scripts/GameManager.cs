@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
+
 
 public enum GameState
 {
-    MainMenu,
+    CutScene,
     Playing,
     Paused,
     GameOver
@@ -10,15 +13,12 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
-    // Singleton Instance
     public static GameManager Instance { get; private set; }
 
-    // Current Game State
     public GameState CurrentState { get; private set; }
 
     private void Awake()
     {
-        // Singleton kontrolü
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -26,15 +26,32 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); // Sahne geçiþlerinde kaybolmasýn
+        DontDestroyOnLoad(gameObject);
+
     }
 
     private void Start()
     {
-        ChangeState(GameState.MainMenu); // Oyun baþladýðýnda ana menüde baþlasýn
+        ChangeState(GameState.Playing);
     }
 
-    // GameState deðiþtirici
+    private void OnEnable()
+    {
+        PlayerController.OnPlayerDied += OnPlayerDied;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        PlayerController.OnPlayerDied -= OnPlayerDied;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnPlayerDied()
+    {
+        ChangeState(GameState.GameOver);
+    }
+
     public void ChangeState(GameState newState)
     {
         if (newState == CurrentState)
@@ -42,11 +59,10 @@ public class GameManager : MonoBehaviour
 
         CurrentState = newState;
 
-        // Her durum için gerekli aksiyonlarý burada tanýmla
         switch (CurrentState)
         {
-            case GameState.MainMenu:
-                HandleMainMenu();
+            case GameState.CutScene:
+                HandleCutScene();
                 break;
             case GameState.Playing:
                 HandlePlaying();
@@ -60,37 +76,44 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void HandleMainMenu()
+    private void HandleCutScene()
     {
-        Time.timeScale = 1f; // Menüde zaman normal akabilir
-        Debug.Log("Game State: Main Menu");
-        // Ana menü UI’si açýlabilir
+        Time.timeScale = 1f;
+        Debug.Log("Game State: CutScene");
+        // Cutscene oynatýlýr (kontroller devre dýþý, UI kapalý olabilir)
+        // Ýsteðe baðlý olarak oyuncu giriþi engellenebilir
     }
 
     private void HandlePlaying()
     {
         Time.timeScale = 1f;
         Debug.Log("Game State: Playing");
-        // Oyunu baþlat
+        // Gameplay baþlar
     }
 
     private void HandlePaused()
     {
         Time.timeScale = 0f;
         Debug.Log("Game State: Paused");
-        // Pause UI gösterilebilir
+        // Pause menüsü gösterilir
     }
 
     private void HandleGameOver()
     {
         Time.timeScale = 0f;
         Debug.Log("Game State: Game Over");
-        // Game over ekraný gösterilebilir
+        
+        StartCoroutine(RestartLevelDelayed());
+
+        // UI açýlabilir
+        // Fade, ses, animasyon tetiklenebilir
+        // Restart veya Menü tuþu aktif edilebilir
     }
 
-    // Geliþtirici kolaylýðý için bazý kýsayollar (isteðe baðlý)
+
     private void Update()
     {
+        // Escape ile pause sadece Playing veya Paused durumundayken geçerli
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (CurrentState == GameState.Playing)
@@ -99,4 +122,27 @@ public class GameManager : MonoBehaviour
                 ChangeState(GameState.Playing);
         }
     }
+
+    private IEnumerator RestartLevelDelayed()
+    {
+        yield return new WaitForSecondsRealtime(2f); // 2 saniye bekle (zaman donsa bile)
+        RestartLevel();
+    }
+
+
+    public void RestartLevel()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (CurrentState == GameState.GameOver)
+        {
+            // Sahne yeniden yüklendiðinde otomatik Playing'e geç
+            ChangeState(GameState.Playing);
+        }
+    }
+
 }
