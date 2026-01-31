@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2818423482518236617
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9164680714773649877}
+  - component: {fileID: 8993545895321154594}
+  - component: {fileID: 974460331062112406}
+  m_Layer: 0
+  m_Name: MusicManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9164680714773649877
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2818423482518236617}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.3124, y: 0.05425, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8993545895321154594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2818423482518236617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab012f3ee9e3f4ca092fbe39763e6337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  musicSource: {fileID: 0}
+  musicClips:
+  - {fileID: 8300000, guid: 77965d4cf5f344fc795f3a45ab1ad16d, type: 3}
+  - {fileID: 8300000, guid: 663c17dbb654940bd96fa380f1ff2155, type: 3}
+  - {fileID: 8300000, guid: cb30f5925afbf4080a6722055e208aa5, type: 3}
+  musicVolume: 0.7
+  sfxSource: {fileID: 0}
+  sfxClips:
+  - {fileID: 8300000, guid: 8a28d8732ca714280b8dec08e1755e72, type: 3}
+  - {fileID: 8300000, guid: 3c16ba9ab7f9d4f1cb248f71a4d60e63, type: 3}
+  - {fileID: 8300000, guid: fca22d2fc91264a84a393eb22b1204ca, type: 3}
+  - {fileID: 8300000, guid: 75f2e9bcedbb74ca7b2574af72fb204f, type: 3}
+  - {fileID: 8300000, guid: b9da7ee16b32e4111a01eec4fd4791db, type: 3}
+  - {fileID: 8300000, guid: d16146158e875492ca9385aeaa9737a3, type: 3}
+  - {fileID: 8300000, guid: 935aab98967f3410d8d15ee978ef23fe, type: 3}
+  sfxVolume: 0.5
+  maxSFXSources: 5
+--- !u!114 &974460331062112406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2818423482518236617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75017304d089d4d5391f1f2d7ef6c327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManagerTester
+  showInstructions: 1
