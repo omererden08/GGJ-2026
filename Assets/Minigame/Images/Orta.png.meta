@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0cd6b2968e0324a0ab7f5e5dc424b63d
+guid: cd685ffc2c2c77f4884a01bd25381f72
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4715925381734143381
-    second: Yer_0
+      213: 55137786780149755
+    second: Orta_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Yer_0
+      name: Orta_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 2048
-        height: 2048
+        x: 6
+        y: 798
+        width: 2022
+        height: 325
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 595138d0625527140800000000000000
-      internalID: 4715925381734143381
+      spriteID: bf76bb26683e3c000800000000000000
+      internalID: 55137786780149755
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Yer_0: 4715925381734143381
+      Orta_0: 55137786780149755
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         AudioManager.Instance.PlaySFX(1);
-        SceneLoader.Instance.LoadScene("Level1", GameState.Playing);
+        SceneLoader.Instance.LoadScene("Gameplay", GameState.Playing);
     }
     private void HandleMainMenu()
     {

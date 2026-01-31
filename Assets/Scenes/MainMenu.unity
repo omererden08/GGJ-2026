@@ -259,6 +259,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1673642386278163561, guid: 6bcb0d60a3447864a8b5fcd4a4e95300, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673642386278163561, guid: 6bcb0d60a3447864a8b5fcd4a4e95300, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2041742493863519997, guid: 6bcb0d60a3447864a8b5fcd4a4e95300, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -306,6 +314,14 @@ PrefabInstance:
     - target: {fileID: 3622514940852280174, guid: 6bcb0d60a3447864a8b5fcd4a4e95300, type: 3}
       propertyPath: m_Color.a
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792963569486722093, guid: 6bcb0d60a3447864a8b5fcd4a4e95300, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7402974228488769074, guid: 6bcb0d60a3447864a8b5fcd4a4e95300, type: 3}
+      propertyPath: m_Name
+      value: sceneCanvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1058,8 +1074,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1508837938}
+  - {fileID: 281068041}
   - {fileID: 1544138722}
   - {fileID: 1280431172}
   - {fileID: 1472062152}
   - {fileID: 5225927976985275792}
-  - {fileID: 281068041}

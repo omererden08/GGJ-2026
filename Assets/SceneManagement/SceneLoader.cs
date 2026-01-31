@@ -11,6 +11,8 @@ public class SceneLoader : MonoBehaviour
     [Header("Fade Settings")]
     [SerializeField] private Image fadeImage;
     [SerializeField] private float fadeDuration = 1f;
+    [SerializeField] private Canvas canvasObject;
+
 
     private void Awake()
     {
@@ -22,11 +24,13 @@ public class SceneLoader : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        canvasObject = fadeImage.canvas;
 
         if (fadeImage != null)
         {
             fadeImage.color = new Color(0, 0, 0, 1); // Start fully black
-            fadeImage.DOFade(0f, fadeDuration);      // Fade in at start
+            fadeImage.DOFade(0f, fadeDuration); 
+            canvasObject.sortingOrder = 0;
         }
         else
         {
@@ -57,6 +61,7 @@ public class SceneLoader : MonoBehaviour
             yield break;
 
         fadeImage.raycastTarget = true;
+        canvasObject.sortingOrder = 1;
         yield return fadeImage.DOFade(1f, fadeDuration).WaitForCompletion();
     }
 
@@ -66,6 +71,7 @@ public class SceneLoader : MonoBehaviour
             yield break;
 
         yield return fadeImage.DOFade(0f, fadeDuration).WaitForCompletion();
+        canvasObject.sortingOrder = 0;
         fadeImage.raycastTarget = false;
     }
 }

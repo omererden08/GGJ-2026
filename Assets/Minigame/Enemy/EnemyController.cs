@@ -89,6 +89,15 @@ public class EnemyController : MonoBehaviour
 
                 Node currentNode = currentPath[currentPathIndex];
                 Vector2 direction = ((Vector2)currentNode.worldPosition - rb.position).normalized;
+
+                if (direction != Vector2.zero)
+                {
+                    float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    float smoothAngle = Mathf.LerpAngle(rb.rotation, targetAngle, Time.fixedDeltaTime * 10f); // 10f hızı ayarlayan katsayı
+                    rb.rotation = smoothAngle;
+                }
+
+
                 rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
 
                 float distance = Vector2.Distance(rb.position, currentNode.worldPosition);
@@ -99,6 +108,7 @@ public class EnemyController : MonoBehaviour
 
                 yield return new WaitForFixedUpdate();
             }
+
 
             currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
         }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -8,9 +9,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float cooldown = 1f;
     private Vector2 moveInput;
 
     private bool isDead = false;
+    private bool isLocked = false;
 
     public static event Action OnPlayerDied;
 
@@ -21,13 +24,13 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (isDead) return;
+        if (isDead || isLocked) return;
         HandleInput();
     }
 
     private void FixedUpdate()
     {
-        if (isDead) return;
+        if (isDead || isLocked) return;
         Move();
     }
 
@@ -54,5 +57,23 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("☠️ Player died");
         OnPlayerDied?.Invoke(); // Event gönder
+    }
+
+    public void PlayerLocked()
+    {
+        if (!isLocked)
+            StartCoroutine(LockRoutine());
+    }
+
+    IEnumerator LockRoutine()
+    {
+        isLocked = true;
+        moveInput = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
+        rb.Sleep();
+
+        yield return new WaitForSeconds(cooldown);
+
+        isLocked = false;
     }
 }
