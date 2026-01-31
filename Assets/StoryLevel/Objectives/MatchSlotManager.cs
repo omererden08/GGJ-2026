@@ -4,39 +4,32 @@ public class MatchSlotManager : MonoBehaviour
 {
     public static MatchSlotManager Instance;
 
-    [Header("Parent References (Auto-filled by name)")]
-    private Transform Objects;     // Grabbable objelerin parent objesi
-    private Transform Positions;   // Drop pozisyonlarının parent objesi
+    [Header("Parent References")]
+    [SerializeField] private Transform Objects;
+    [SerializeField] private Transform Positions;
 
-    public GrabbableObject[] grabbableObjects;
-    public Transform[] targetPositions;
+    [HideInInspector] public GrabbableObject[] grabbableObjects;
+    [HideInInspector] public Transform[] targetPositions;
+
+    [SerializeField] private string sceneName;
 
     private void Awake()
     {
-        // Singleton setup
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
         Instance = this;
+    }
 
-        // Otomatik olarak sahnede isimle objeleri bul
-        Objects = GameObject.Find("Objects")?.transform;
-        Positions = GameObject.Find("Positions")?.transform;
-
-        if (Objects == null || Positions == null)
-        {
-            Debug.LogError("❌ 'Objects' veya 'Positions' adlı GameObject sahnede bulunamadı!");
-            return;
-        }
-
+    private void Start()
+    {
         FillArraysFromParents();
     }
 
     private void FillArraysFromParents()
     {
-        // Objeleri doldur
         int objCount = Objects.childCount;
         grabbableObjects = new GrabbableObject[objCount];
 
@@ -51,7 +44,6 @@ public class MatchSlotManager : MonoBehaviour
             grabbableObjects[i] = grabbable;
         }
 
-        // Pozisyonları doldur
         int posCount = Positions.childCount;
         targetPositions = new Transform[posCount];
 
@@ -62,7 +54,7 @@ public class MatchSlotManager : MonoBehaviour
 
         if (objCount != posCount)
         {
-            Debug.LogWarning($"⚠️ Objeler ({objCount}) ve Pozisyonlar ({posCount}) sayısı eşleşmiyor!");
+            Debug.LogWarning($"⚠️ Objeler ({objCount}) ve Pozisyonlar ({posCount}) eşleşmiyor!");
         }
     }
 
@@ -75,10 +67,25 @@ public class MatchSlotManager : MonoBehaviour
             if (grabbableObjects[i] == obj && targetPositions[i] == candidatePos)
             {
                 correctPos = targetPositions[i];
+
+                CheckForAllMatches(); // ✅ Match başarılıysa tüm eşleşmeleri kontrol et
                 return true;
             }
         }
 
         return false;
+    }
+
+    private void CheckForAllMatches()
+    {
+        for (int i = 0; i < grabbableObjects.Length; i++)
+        {
+            if (grabbableObjects[i].transform.position != targetPositions[i].position)
+                return; // ❌ Hâlâ eşleşmemiş bir obje var
+        }
+
+        // ✅ Hepsi doğru konumda → Sahne geçişi yapılabilir
+        Debug.Log("✅ Tüm objeler doğru yerleştirildi! Sahne geçiyor...");
+        SceneLoader.Instance.LoadScene(sceneName, GameState.Playing); // ❗ SAHNE ADINI DEĞİŞTİR
     }
 }
