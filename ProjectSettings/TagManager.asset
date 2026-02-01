@@ -4,8 +4,11 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Grabbable
-  - DropSlot
+  - Holder
+  - Vinyl
+  - Mask
+  - VinylSlot
+  - MaskSlot
   layers:
   - Default
   - TransparentFX

@@ -5,70 +5,127 @@ public class ObjectHolder : MonoBehaviour
     [Header("Pickup Settings")]
     [SerializeField] private Transform holdPoint;
     [SerializeField] private KeyCode interactKey = KeyCode.E;
+    
+    private Player player;
+    private GrabVinyl currentVinyl = null;
+    private Transform currentVinylSlot = null;
+    private GrabVinyl heldVinyl = null;
+    private GrabVinyl currentMask = null;
+    private Transform currentMaskSlot = null;
+    private GrabVinyl heldMask = null;
 
-    private GrabbableObject currentObject = null;
-    private Transform currentDropSlot = null;
-    private GrabbableObject heldObject = null;
+    private void Start()
+    {
+        player = GetComponentInParent<Player>();
+    }
 
     private void Update()
     {
         if (Input.GetKeyDown(interactKey))
         {
-            if (heldObject == null)
-                TryPickup();
+            if (heldVinyl == null)
+                TryPickupVinyl();
             else
-                DropObject();
+                DropVinyl();
+            if (heldMask == null)
+                TryPickupMask();
+            else
+                DropMask();
         }
     }
 
-    private void TryPickup()
+    private void TryPickupVinyl()
     {
-        if (currentObject == null) return;
+        if (currentVinyl == null) return;
 
-        heldObject = currentObject;
-        heldObject.OnPickup(holdPoint);
+        heldVinyl = currentVinyl;
+        // Parent the vinyl to the hold point so it stays attached while carrying
+        heldVinyl.OnPickup(holdPoint);
+        player.StartCarrying();
+    }
+    private void TryPickupMask()
+    {
+        if (currentMask == null) return;
+
+        heldMask = currentMask;
+        // Parent the mask to the hold point so it stays attached while carrying
+        heldMask.OnPickup(holdPoint);
+        player.StartCarrying();
     }
 
-    private void DropObject()
+    private void DropVinyl()
     {
-        if (heldObject == null) return;
+        if (heldVinyl == null) return;
 
         bool matched = false;
         Transform matchedPos = null;
 
-        if (currentDropSlot != null)
+        if (currentVinylSlot != null)
         {
-            matched = MatchSlotManager.Instance.TryMatch(heldObject, currentDropSlot, out matchedPos);
+            matched = MatchVinylManager.Instance.TryMatch(heldVinyl, currentVinylSlot, out matchedPos);
         }
 
-        heldObject.OnDrop(matched, matchedPos);
-        heldObject = null;
+        heldVinyl.OnDrop(matched, matchedPos);
+        heldVinyl = null;
+        player.StopCarrying();
     }
+        private void DropMask()
+    {
+        if (heldMask == null) return;
 
+        bool matched = false;
+        Transform matchedPos = null;
+
+        if (currentMaskSlot != null)
+        {
+            matched = MatchVinylManager.Instance.TryMatch(heldMask, currentMaskSlot, out matchedPos);
+        }
+
+        heldMask.OnDrop(matched, matchedPos);
+        heldMask = null;
+        player.StopCarrying();
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Grabbable") && other.TryGetComponent(out GrabbableObject obj))
+        if (other.CompareTag("Vinyl") && other.TryGetComponent(out GrabVinyl vinyl))
         {
-            currentObject = obj;
+            currentVinyl = vinyl;
+        }
+        if (other.CompareTag("Mask") && other.TryGetComponent(out GrabVinyl mask))
+        {
+            currentMask = mask;
         }
 
-        if (other.CompareTag("DropSlot"))
+        if (other.CompareTag("VinylSlot"))
         {
-            currentDropSlot = other.transform;
+            currentVinylSlot = other.transform;
+        }
+        if (other.CompareTag("MaskSlot"))
+        {
+            currentMaskSlot = other.transform;
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Grabbable") && currentObject != null && other.transform == currentObject.transform)
+        if (other.CompareTag("Vinyl") && currentVinyl != null && other.transform == currentVinyl.transform)
         {
-            currentObject = null;
+            currentVinyl = null;
         }
 
-        if (other.CompareTag("DropSlot") && other.transform == currentDropSlot)
+        if (other.CompareTag("Mask") && currentMask != null && other.transform == currentMask.transform)
         {
-            currentDropSlot = null;
+            currentMask = null;
+        }
+
+        if (other.CompareTag("VinylSlot") && other.transform == currentVinylSlot)
+        {
+            currentVinylSlot = null;
+        }
+        if (other.CompareTag("MaskSlot") && other.transform == currentMaskSlot)
+        {
+            currentMaskSlot = null;
         }
     }
 }

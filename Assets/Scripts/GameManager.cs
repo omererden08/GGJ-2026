@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public GameState CurrentState { get; private set; }
+    public bool HasMatch = false;
+    public int storyScore = 0;
 
     private void Awake()
     {
