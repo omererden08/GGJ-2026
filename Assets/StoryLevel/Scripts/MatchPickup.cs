@@ -8,6 +8,7 @@ public class MatchPickup : MonoBehaviour
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
+            AudioManager.Instance.PlaySFX(2);
             GameManager.Instance.HasMatch = true;
             Destroy(gameObject);
         }

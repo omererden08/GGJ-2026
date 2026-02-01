@@ -8,6 +8,7 @@ public class CandleInteraction : MonoBehaviour
     private bool playerInRange = false;
     private bool isLit = false;
     
+    
     void Start()
     {
         litCandle.SetActive(false);
@@ -24,6 +25,7 @@ public class CandleInteraction : MonoBehaviour
     
     void LightCandle()
     {
+        AudioManager.Instance.PlaySFX(7);
         unlitCandle.SetActive(false);
         litCandle.SetActive(true);
         GameManager.Instance.storyScore += 1;

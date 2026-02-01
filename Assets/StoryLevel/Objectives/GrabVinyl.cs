@@ -27,6 +27,7 @@ public class GrabVinyl : MonoBehaviour
 	{
 		if (rb2d != null) rb2d.simulated = false;
 		if (col2d != null) col2d.enabled = false;
+		AudioManager.Instance.PlaySFX(2);
 		Debug.Log($"✅ {name} picked up.");
 	}
 
@@ -35,6 +36,7 @@ public class GrabVinyl : MonoBehaviour
 		transform.SetParent(null);
 		if (rb2d != null) rb2d.simulated = true;
 		if (col2d != null) col2d.enabled = true;
+		AudioManager.Instance.PlaySFX(2);
 
 		if (matched && matchedTarget != null)
 		{

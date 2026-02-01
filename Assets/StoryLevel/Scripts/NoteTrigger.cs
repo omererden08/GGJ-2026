@@ -7,14 +7,19 @@ public class NoteTrigger : MonoBehaviour
     [SerializeField] private int noteSoundIndex = 4;
     [SerializeField] private float displayDuration = 3f;
     [SerializeField] private KeyCode interactKey = KeyCode.E;
+    
 
     private bool playerInRange = false;
     private Player player;
 
+    private bool isNoteActive = false;
+
     private void Update()
     {
-        if (playerInRange && Input.GetKeyDown(interactKey))
+        if (playerInRange && Input.GetKeyDown(interactKey) && !isNoteActive)
         {
+            if (player != null && player.IsCarrying())
+                return;
             ShowNote();
         }
     }
@@ -44,7 +49,7 @@ public class NoteTrigger : MonoBehaviour
 
     private void ShowNote()
     {
-        if (noteObject != null)
+        if (noteObject != null && !isNoteActive)
         {
             StartCoroutine(ShowNoteCoroutine());
         }
@@ -52,6 +57,7 @@ public class NoteTrigger : MonoBehaviour
 
     private System.Collections.IEnumerator ShowNoteCoroutine()
     {
+        isNoteActive = true;
         // Oyuncuyu devre dışı bırak
         if (player != null)
             player.enabled = false;
@@ -77,5 +83,6 @@ public class NoteTrigger : MonoBehaviour
 
         // Player devre dışı olduğu için trigger exit çalışmayabilir, manuel sıfırla
         playerInRange = false;
+        isNoteActive = false;
     }
 }

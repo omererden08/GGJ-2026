@@ -10,9 +10,9 @@ public class ObjectHolder : MonoBehaviour
     private GrabVinyl currentVinyl = null;
     private Transform currentVinylSlot = null;
     private GrabVinyl heldVinyl = null;
-    private GrabVinyl currentMask = null;
+    private GrabMask currentMask = null;
     private Transform currentMaskSlot = null;
-    private GrabVinyl heldMask = null;
+    private GrabMask heldMask = null;
 
     private void Start()
     {
@@ -78,7 +78,7 @@ public class ObjectHolder : MonoBehaviour
 
         if (currentMaskSlot != null)
         {
-            matched = MatchVinylManager.Instance.TryMatch(heldMask, currentMaskSlot, out matchedPos);
+            matched = MatchMaskManager.Instance.TryMatch(heldMask, currentMaskSlot, out matchedPos);
         }
 
         heldMask.OnDrop(matched, matchedPos);
@@ -92,7 +92,7 @@ public class ObjectHolder : MonoBehaviour
         {
             currentVinyl = vinyl;
         }
-        if (other.CompareTag("Mask") && other.TryGetComponent(out GrabVinyl mask))
+        if (other.CompareTag("Mask") && other.TryGetComponent(out GrabMask mask))
         {
             currentMask = mask;
         }

@@ -21,6 +21,7 @@ public class Dolap : MonoBehaviour
     
     void OpenDolap()
     {
+        AudioManager.Instance.PlaySFX(3);
         acikDolap.SetActive(true);
         StartCoroutine(MaskAnim());
 

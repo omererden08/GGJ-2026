@@ -8,6 +8,8 @@ public class MatchVinylManager : MonoBehaviour
 	[SerializeField] private GrabVinyl grabbableVinyl;
 	[SerializeField] private Transform targetPosition;
 	[SerializeField] private string sceneName;
+	[SerializeField] GameObject gramafon1;
+	[SerializeField] GameObject gramafon2;
 
 	private void Awake()
 	{
@@ -42,6 +44,12 @@ public class MatchVinylManager : MonoBehaviour
 		if (grabbableVinyl.transform.position != targetPosition.position) return;
 
 		Debug.Log("✅ Vinyl placed correctly. Lets gooo");
+		//game objective yok et
+		gramafon1.SetActive(false);
+		//game objective çağır
+		gramafon2.SetActive(true);
+		//müzik oynamaya başlat
+		AudioManager.Instance.PlayMusic(2);
 
         GameManager.Instance.storyScore += 1;
 	}

@@ -158,6 +158,37 @@ public class AudioManager : MonoBehaviour
 
     #endregion
 
+    #region Music Fade Out
+
+    /// <summary>
+    /// Mevcut çalan müziği belirtilen sürede fade out yapıp durdurur.
+    /// </summary>
+    public void StopMusicWithFade(float duration = 1f)
+    {
+        if (musicSource == null) return;
+        StartCoroutine(FadeOutAndStop(duration));
+    }
+
+    private IEnumerator FadeOutAndStop(float duration)
+    {
+        if (musicSource == null) yield break;
+
+        float startVol = musicSource.volume;
+        float t = 0f;
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            musicSource.volume = Mathf.Lerp(startVol, 0f, t / Mathf.Max(0.0001f, duration));
+            yield return null;
+        }
+
+        musicSource.Stop();
+        musicSource.volume = musicVolume; // restore default for next play
+    }
+
+    #endregion
+
     #region SFX Methods
 
     /// <summary>
