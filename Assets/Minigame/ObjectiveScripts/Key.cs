@@ -9,6 +9,7 @@ public class Key : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isCollected = true;
+            AudioManager.Instance.PlaySFX(2);
             Debug.Log("🔑 Anahtar alındı!");
             Destroy(gameObject); // Anahtarı yok et
         }

@@ -60,6 +60,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b9da7ee16b32e4111a01eec4fd4791db, type: 3}
   - {fileID: 8300000, guid: d16146158e875492ca9385aeaa9737a3, type: 3}
   - {fileID: 8300000, guid: 935aab98967f3410d8d15ee978ef23fe, type: 3}
+  - {fileID: 8300000, guid: 935aab98967f3410d8d15ee978ef23fe, type: 3}
   sfxVolume: 0.5
   maxSFXSources: 5
 --- !u!114 &-8978314470704866196
@@ -74,3 +75,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2381e0cb386277447bd5994c0c60beb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  creditsCanvasPrefab: {fileID: 0}
+  HasMatch: 0
+  storyScore: 0

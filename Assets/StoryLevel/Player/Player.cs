@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
         UpdateAnimation(Time.deltaTime);
         if (GameManager.Instance.storyScore >= 5)
         {
-            SceneLoader.Instance.LoadScene("Minigame", GameState.Playing);
+            SceneLoader.Instance.LoadScene("Level 1", GameState.Playing);
         }
     }
 

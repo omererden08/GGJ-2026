@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     private bool isLocked = false;
 
     public static event Action OnPlayerDied;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();

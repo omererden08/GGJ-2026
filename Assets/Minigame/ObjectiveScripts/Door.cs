@@ -25,6 +25,7 @@ public class Door : MonoBehaviour
         switch (doorState)
         {
             case DoorState.Open:
+            AudioManager.Instance.PlaySFX(3);
                 Debug.Log("🚪 Kapı zaten açık. Geçebilirsin.");
                 SceneLoader.Instance.LoadScene(sceneName, GameState.Playing);
                 break;

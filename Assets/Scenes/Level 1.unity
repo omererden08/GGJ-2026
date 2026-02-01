@@ -608,6 +608,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6297937735066049311, guid: f7c95986fa4091d46a645a65f9b4d56c, type: 3}
+      propertyPath: jumpScare
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8820026023175995218, guid: f7c95986fa4091d46a645a65f9b4d56c, type: 3}
       propertyPath: m_Name
       value: Player (1)
@@ -2808,7 +2812,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1606519220
 Transform:
   m_ObjectHideFlags: 0
@@ -2864,6 +2868,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8993545895321154594, guid: ebfecee9534eb479c9c50826d1f7d4ce, type: 3}
+      propertyPath: 'sfxClips.Array.data[7]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 657f959981e254ce4b7d30f9b29e00ab, type: 3}
     - target: {fileID: 9164680714773649877, guid: ebfecee9534eb479c9c50826d1f7d4ce, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.53956

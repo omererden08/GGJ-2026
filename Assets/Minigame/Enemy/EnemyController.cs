@@ -128,11 +128,13 @@ public class EnemyController : MonoBehaviour
 
             if (spotLight != null)
                 spotLight.color = activeColor;
+                AudioManager.Instance.PlaySFX(5);
 
             yield return new WaitForSeconds(activeDuration);
 
             if (spotLight != null)
                 spotLight.color = inactiveColor;
+                AudioManager.Instance.StopAllSFX();
         }
     }
 
