@@ -14,6 +14,9 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Menu Prefabs")]
+    [SerializeField] private GameObject creditsCanvasPrefab;
+
     public static GameManager Instance { get; private set; }
 
     public GameState CurrentState { get; private set; }
@@ -87,9 +90,22 @@ public class GameManager : MonoBehaviour
         // Cutscene oynat�l�r (kontroller devre d���, UI kapal� olabilir)
         // �ste�e ba�l� olarak oyuncu giri�i engellenebilir
     }
-    public void StartGame()
+    public void StartGameButton()
+    {
+        StartCoroutine(StartGame());
+    }
+    public void QuitGameButton()
+    {
+        StartCoroutine(QuitMenu());
+    }
+    public void CreditsGameButton()
+    {
+        StartCoroutine(Credits());
+    }
+    private IEnumerator StartGame()
     {
         AudioManager.Instance.PlaySFX(1);
+        yield return new WaitForSecondsRealtime(1f);
         SceneLoader.Instance.LoadScene("Gameplay", GameState.Playing);
     }
     private void HandleMainMenu()
@@ -98,13 +114,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game State: MainMenu");
         AudioManager.Instance.PlayMusic(0);
         AudioManager.Instance.SetMusicVolume(1f);
-        AudioManager.Instance.SetSFXVolume(0.5f);
+        AudioManager.Instance.SetSFXVolume(1f);
     }
 
     private void HandlePlaying()
     {
         Time.timeScale = 1f;
         Debug.Log("Game State: Playing");
+        AudioManager.Instance.SetMusicVolume(0.5f);
         // Gameplay ba�lar
     }
 
@@ -161,5 +178,16 @@ public class GameManager : MonoBehaviour
             ChangeState(GameState.Playing);
         }
     }
-
+    private IEnumerator QuitMenu()
+    {
+        AudioManager.Instance.PlaySFX(1); 
+        yield return new WaitForSecondsRealtime(1f);
+        Application.Quit();
+    }
+    private IEnumerator Credits()
+    {
+        AudioManager.Instance.PlaySFX(1);
+        yield return new WaitForSecondsRealtime(1f);
+        Instantiate(creditsCanvasPrefab);
+    }
 }

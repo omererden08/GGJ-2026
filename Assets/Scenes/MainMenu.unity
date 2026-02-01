@@ -203,7 +203,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 432812372}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: StartGame
+        m_MethodName: StartGameButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -310,6 +310,10 @@ PrefabInstance:
     - target: {fileID: 2745401071830801308, guid: 6bcb0d60a3447864a8b5fcd4a4e95300, type: 3}
       propertyPath: m_Name
       value: SceneManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745401071830801308, guid: 6bcb0d60a3447864a8b5fcd4a4e95300, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3622514940852280174, guid: 6bcb0d60a3447864a8b5fcd4a4e95300, type: 3}
       propertyPath: m_Color.a
@@ -420,7 +424,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 900306882}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 432812372}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: QuitGameButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &900306882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -973,7 +989,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1794646164}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 432812372}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: CreditsGameButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1794646164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1020,6 +1048,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8978314470704866196, guid: ebfecee9534eb479c9c50826d1f7d4ce, type: 3}
+      propertyPath: creditsCanvasPrefab
+      value: 
+      objectReference: {fileID: 7348597697775913086, guid: 2e59af79b1f1f432285e9986c118c38e, type: 3}
     - target: {fileID: 2818423482518236617, guid: ebfecee9534eb479c9c50826d1f7d4ce, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1074,8 +1106,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1508837938}
-  - {fileID: 281068041}
   - {fileID: 1544138722}
+  - {fileID: 281068041}
   - {fileID: 1280431172}
   - {fileID: 1472062152}
   - {fileID: 5225927976985275792}
