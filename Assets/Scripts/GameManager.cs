@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
     {
         AudioManager.Instance.PlaySFX(1);
         yield return new WaitForSecondsRealtime(1f);
-        SceneLoader.Instance.LoadScene("Gameplay", GameState.Playing);
+        SceneLoader.Instance.LoadScene("Cutscene 0", GameState.CutScene);
     }
     private void HandleMainMenu()
     {

@@ -37,7 +37,10 @@ public class SceneLoader : MonoBehaviour
             Debug.LogWarning("Fade image not assigned in SceneLoader.");
         }
     }
-
+    private void Update()
+    {
+         HandleCutsceneSkip();
+    }
     public void LoadScene(string sceneName, GameState newStateAfterLoad)
     {
         StartCoroutine(LoadSceneRoutine(sceneName, newStateAfterLoad));
@@ -73,5 +76,14 @@ public class SceneLoader : MonoBehaviour
         yield return fadeImage.DOFade(0f, fadeDuration).WaitForCompletion();
         canvasObject.sortingOrder = 0;
         fadeImage.raycastTarget = false;
+    }
+
+    private void HandleCutsceneSkip()
+    {
+        // Eðer oyun cutscene state'indeyse ve sol týklama varsa sahneyi deðiþtir
+        if (GameManager.Instance.CurrentState == GameState.CutScene && Input.GetMouseButtonDown(0))
+        {
+            SceneLoader.Instance.LoadScene("Level 1", GameState.Playing);
+        }
     }
 }
