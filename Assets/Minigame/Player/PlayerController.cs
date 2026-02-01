@@ -6,6 +6,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private Animator animator;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
@@ -20,12 +21,21 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        if (isDead || isLocked) return;
+        if (isDead || isLocked)
+        {
+            moveInput = Vector2.zero;
+            SetWalkAnimation(false);
+            return;
+        }
+
         HandleInput();
+        HandleRotation();
+        SetWalkAnimation(moveInput.sqrMagnitude > 0f);
     }
 
     private void FixedUpdate()
@@ -46,6 +56,21 @@ public class PlayerController : MonoBehaviour
         rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
     }
 
+    void HandleRotation()
+    {
+        if (moveInput != Vector2.zero)
+        {
+            float angle = Mathf.Atan2(moveInput.x, -moveInput.y) * Mathf.Rad2Deg;
+            rb.rotation = angle;
+        }
+    }
+
+    void SetWalkAnimation(bool isWalking)
+    {
+        if (animator != null)
+            animator.SetBool("walk", isWalking);
+    }
+
     public void Die()
     {
         if (isDead) return;
@@ -55,8 +80,10 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         rb.Sleep();
 
+        SetWalkAnimation(false);
+
         Debug.Log("☠️ Player died");
-        OnPlayerDied?.Invoke(); // Event gönder
+        OnPlayerDied?.Invoke();
     }
 
     public void PlayerLocked()
@@ -71,6 +98,8 @@ public class PlayerController : MonoBehaviour
         moveInput = Vector2.zero;
         rb.linearVelocity = Vector2.zero;
         rb.Sleep();
+
+        SetWalkAnimation(false);
 
         yield return new WaitForSeconds(cooldown);
 

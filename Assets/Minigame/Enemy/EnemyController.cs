@@ -90,13 +90,12 @@ public class EnemyController : MonoBehaviour
                 Node currentNode = currentPath[currentPathIndex];
                 Vector2 direction = ((Vector2)currentNode.worldPosition - rb.position).normalized;
 
+                // 🌀 ROTATE: yön vektöründen açıyı hesapla
                 if (direction != Vector2.zero)
                 {
-                    float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                    float smoothAngle = Mathf.LerpAngle(rb.rotation, targetAngle, Time.fixedDeltaTime * 10f); // 10f hızı ayarlayan katsayı
-                    rb.rotation = smoothAngle;
+                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    rb.rotation = angle + 180; // Rigidbody2D ile dönme
                 }
-
 
                 rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
 
