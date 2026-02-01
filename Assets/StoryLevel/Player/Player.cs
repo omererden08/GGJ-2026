@@ -7,11 +7,11 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     [SerializeField] GameObject tutorialObject;
-    
+
     [Header("Sprites")]
     [SerializeField] private Sprite[] walkSprites = null;
-    [SerializeField] private Sprite[] carrySprites = null; // YENİ: Taşıma sprite'ları
-    [Tooltip("0-based index into walkSprites used as the idle sprite (e.g. 3 = 4th element)")]
+    [SerializeField] private Sprite[] carrySprites = null;
+    [Tooltip("0-based index into walkSprites used as the idle sprite")]
     [SerializeField, Min(0)] private int idleFrameIndex = 3;
     [SerializeField, Min(1f)] private float framesPerSecond = 8f;
 
@@ -25,27 +25,31 @@ public class Player : MonoBehaviour
     [SerializeField] private float minY = -4.5f;
     [SerializeField] private float maxY = 4.5f;
 
+    private bool isDone;
+    private bool hasLoadedScene = false; // 🔁 Yeni eklenen kontrol
+
     private float animTimer;
     private int currentFrame;
     private Vector3 baseScale;
-    
-    // YENİ: Taşıma durumu
+
     private bool isCarrying = false;
-    private Sprite[] currentSpriteSet; // Aktif sprite seti
+    private Sprite[] currentSpriteSet;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         baseScale = transform.localScale;
-        
-        // Başlangıçta normal sprite setini kullan
+
         currentSpriteSet = walkSprites;
-        
         if (currentSpriteSet != null && currentSpriteSet.Length > 0)
             idleFrameIndex = Mathf.Clamp(idleFrameIndex, 0, currentSpriteSet.Length - 1);
+
         currentFrame = idleFrameIndex;
         ApplyIdleSprite();
+
+        isDone = false;
+        hasLoadedScene = false;
     }
 
     private void Update()
@@ -55,12 +59,21 @@ public class Player : MonoBehaviour
             if (tutorialObject.activeSelf) AudioManager.Instance.PlaySFX(4);
             tutorialObject.SetActive(false);
         }
+
         if (tutorialObject.activeSelf) return;
+
         HandleInput();
         UpdateAnimation(Time.deltaTime);
+
         if (GameManager.Instance.storyScore >= 5)
         {
-            SceneLoader.Instance.LoadScene("Level 1", GameState.Playing);
+            isDone = true;
+        }
+
+        if (isDone && !hasLoadedScene)
+        {
+            hasLoadedScene = true;
+            SceneLoader.Instance.LoadScene("Cutscene 1", GameState.CutScene);
         }
     }
 
@@ -86,13 +99,13 @@ public class Player : MonoBehaviour
         rb.MovePosition(new Vector2(clampedX, clampedY));
 
         spriteRenderer.sortingOrder = rb.position.y > 0 ? 1 : 4;
-        
+
         if (moveInput.x > 0.01f)
             transform.localScale = new Vector3(1, 1, 1);
         else if (moveInput.x < -0.01f)
             transform.localScale = new Vector3(-1, 1, 1);
     }
-    
+
     private void UpdateAnimation(float deltaTime)
     {
         if (currentSpriteSet == null || currentSpriteSet.Length == 0)
@@ -149,7 +162,6 @@ public class Player : MonoBehaviour
         return next;
     }
 
-    // YENİ: Taşıma durumunu değiştiren public metodlar
     public void StartCarrying()
     {
         if (carrySprites == null || carrySprites.Length == 0)
@@ -157,7 +169,7 @@ public class Player : MonoBehaviour
             Debug.LogWarning("Carry sprites not assigned!");
             return;
         }
-        
+
         isCarrying = true;
         currentSpriteSet = carrySprites;
         currentFrame = idleFrameIndex;
@@ -171,7 +183,7 @@ public class Player : MonoBehaviour
         currentFrame = idleFrameIndex;
         ApplyIdleSprite();
     }
-    
+
     public bool IsCarrying()
     {
         return isCarrying;
