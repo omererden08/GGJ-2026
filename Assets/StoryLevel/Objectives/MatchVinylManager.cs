@@ -49,6 +49,7 @@ public class MatchVinylManager : MonoBehaviour
 		//game objective çağır
 		gramafon2.SetActive(true);
 		//müzik oynamaya başlat
+		AudioManager.Instance.SetMusicVolume(0.7f);
 		AudioManager.Instance.PlayMusic(2);
 
         GameManager.Instance.storyScore += 1;

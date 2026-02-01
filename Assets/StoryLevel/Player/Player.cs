@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
+    [SerializeField] GameObject tutorialObject;
     
     [Header("Sprites")]
     [SerializeField] private Sprite[] walkSprites = null;
@@ -49,8 +50,18 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (tutorialObject.activeSelf) AudioManager.Instance.PlaySFX(4);
+            tutorialObject.SetActive(false);
+        }
+        if (tutorialObject.activeSelf) return;
         HandleInput();
         UpdateAnimation(Time.deltaTime);
+        if (GameManager.Instance.storyScore >= 5)
+        {
+            SceneLoader.Instance.LoadScene("Minigame", GameState.Playing);
+        }
     }
 
     private void FixedUpdate()
