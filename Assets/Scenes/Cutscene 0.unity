@@ -493,7 +493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CutsceneManager
   useAutoEndTime: 1
-  autoEndTime: 1.7
+  autoEndTime: 1.5
   allowSkipWithClick: 1
   useTimeline: 0
   timeline: {fileID: 0}

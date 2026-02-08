@@ -265,7 +265,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1673642386278163561, guid: 6bcb0d60a3447864a8b5fcd4a4e95300, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2041742493863519997, guid: 6bcb0d60a3447864a8b5fcd4a4e95300, type: 3}
       propertyPath: m_LocalPosition.x
@@ -884,7 +884,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1544138722
 RectTransform:

@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public GameState CurrentState { get; private set; }
     public bool HasMatch = false;
     public int storyScore = 0;
+    private Cursor cursor;
 
     private void Awake()
     {
@@ -89,8 +90,8 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         Debug.Log("Game State: CutScene");
-        // Cutscene oynat�l�r (kontroller devre d���, UI kapal� olabilir)
-        // �ste�e ba�l� olarak oyuncu giri�i engellenebilir
+        Cursor.visible = false; // 🎯 İMLEÇ GİZLENDİ
+        Cursor.lockState = CursorLockMode.Confined;
     }
     public void StartGameButton()
     {
@@ -114,6 +115,8 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         Debug.Log("Game State: MainMenu");
+        Cursor.visible = true; // 🎯 İMLEÇ GİZLENDİ
+        Cursor.lockState = CursorLockMode.Confined;
         AudioManager.Instance.PlayMusic(0);
         AudioManager.Instance.SetMusicVolume(1f);
         AudioManager.Instance.SetSFXVolume(1f);
@@ -123,8 +126,10 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         Debug.Log("Game State: Playing");
+        Cursor.visible = false; // 🎯 İMLEÇ GİZLENDİ
+        Cursor.lockState = CursorLockMode.Confined;
         AudioManager.Instance.SetMusicVolume(0.5f);
-        // Gameplay ba�lar
+
     }
 
     private void HandlePaused()
